@@ -1,3 +1,3 @@
 # NodeMongo
 
-exercise no.2
+exercise no.3
