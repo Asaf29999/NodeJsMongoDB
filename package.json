@@ -1,0 +1,27 @@
+{
+  "name": "nodemongo",
+  "version": "1.0.0",
+  "description": "exercise no.2",
+  "main": "MongoServerSide.js",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.5.7",
+    "mongoose": "^5.9.14"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/asaf29999/nodemongo.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/asaf29999/nodemongo/issues"
+  },
+  "homepage": "https://gitlab.com/asaf29999/nodemongo#readme"
+}
