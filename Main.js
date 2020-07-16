@@ -1,4 +1,4 @@
-const ConnectDB = require('./DBfunction/DBconnection');
+const ConnectDB = require('./DBfunction/DBconnection').ConnectDB;
 const listener = require('./DBfunction/Listener');
 
 ConnectDB();

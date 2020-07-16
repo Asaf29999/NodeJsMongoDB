@@ -1,4 +1,6 @@
 var ClubModel = require('../models/Club');
+//const { Db } = require('mongodb');
+//const db = require('./DBfunction/DBconnection').db;
 
 var getAll = async (request, response) => {
     try {
@@ -20,10 +22,49 @@ var getClub = async (request, response) => {
 
 var getBest = async (request, response) => {
     try {
-        var clubList = await ClubModel.find().exec();
-        let womenAvgs = [];
-        clubList.forEach(club => womenAvgs.push(club.women.reduce((total, next) => total + next.cool, 0) / club.women.length));
-        response.send(`The best club is : ${clubList[womenAvgs.indexOf(Math.max(...womenAvgs))].name}`);
+        var MongoClient = require('mongodb').MongoClient;
+        var url = "mongodb://localhost:27017/Hafifa2";
+
+
+
+        const pipeline = [
+            {
+                '$sort': {
+                    'name': 1
+                }
+            }
+        ]
+
+        var x = MongoClient.connect(url, 
+            async function (db) {
+            var result = db.db("Hafifa2").collection("clubs").aggregate(pipeline);
+
+            await result.forEach(club => {
+                console.log(`${club._id}`);
+            });
+            
+            return result;
+        });
+
+        response.send(x);
+
+
+        // var mongoose = require('mongoose');
+        // mongoose.connect('mongodb://localhost:27017/Hafifa2', { useNewUrlParser: true });
+
+        // var db = mongoose.connection;
+        // var x = db.db("Hafifa2").collection("clubs").aggregate(
+        //     [
+        //         { $group: { "_id": club.name, "count": { "$sum": 1 } } }
+        //     ]
+        // );
+
+
+        
+        // var clubList = await ClubModel.find().exec();
+        // let womenAvgs = [];
+        // clubList.forEach(club => womenAvgs.push(club.women.reduce((total, next) => total + next.cool, 0) / club.women.length));
+        // response.send(`The best club is : ${clubList[womenAvgs.indexOf(Math.max(...womenAvgs))].name}`);
 
     } catch (error) {
         response.status(500).send(error);

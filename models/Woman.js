@@ -10,4 +10,3 @@ const WomanModel = mongoose.model('Woman', womanSchema);
 
 module.exports.WomanModel = WomanModel;
 module.exports.WomanSchema = womanSchema;
-

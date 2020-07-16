@@ -27,8 +27,10 @@ const ConnectDB= ()=>{
     var db = mongoose.connection;
     db.on('error', console.error.bind(console, 'connection error:'));
     db.once('open', function () {
+    
     });
 
 }    
 
-module.exports = ConnectDB;
+module.exports.ConnectDB = ConnectDB;
+//module.exports.db = db;
