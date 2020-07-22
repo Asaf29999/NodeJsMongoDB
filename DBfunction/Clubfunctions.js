@@ -32,11 +32,9 @@ var getBest = async (request, response) => {
 
         await result.forEach(club => {
             resultArray.push(club);
-            console.log(`${club.name}`);
         });
-      
-        console.log(resultArray);
-        response.send(JSON.stringify(resultArray));
+
+        response.send(`The best club is : ${resultArray[0].name}`);
     }
     catch (error) {
         response.status(500).send(error);
@@ -48,20 +46,31 @@ var getBest = async (request, response) => {
     async function calculteAVG(client) {
         const pipeline = [
             {
-                '$sort': {
-                    'name': 1
+                '$unwind': {
+                    'path': '$women'
                 }
+            }, {
+                '$group': {
+                    '_id': '$_id',
+                    'name': {
+                        '$first': '$name'
+                    },
+                    'coolAVG': {
+                        '$avg': '$women.cool'
+                    }
+                }
+            }, {
+                '$sort': {
+                    'coolAVG': -1
+                }
+            }, {
+                '$limit': 1
             }
-        ]
+        ];
         const aggCursor = client.db("Hafifa2").collection("clubs").aggregate(pipeline);
-
-        await aggCursor.forEach(club => {
-            console.log(`${club._id}`);
-        });
 
         return aggCursor;
     }
-
 
 
     // var clubList = await ClubModel.find().exec();
